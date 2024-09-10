@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import random
 import json
 import os
 from influxdb_client import InfluxDBClient, Point, WritePrecision
@@ -60,7 +61,10 @@ def main():
 
     # Initialize MQTT Client
     print("Initializing MQTT Client...")
-    client_mqtt = mqtt.Client()
+    #client_mqtt = mqtt.Client()
+    client_id = f'python-mqtt-{random.randint(0, 1000)}'
+    client_mqtt = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, client_id)
+    
     client_mqtt.on_connect = on_connect
     client_mqtt.on_message = on_message
 
